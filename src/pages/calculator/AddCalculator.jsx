@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { formatNumber } from '../../utils/formatNumber';
+import BackNav from '../../components/BackNav';
+import { safeEval } from '../../utils/safeEval';
+import ExpressionInput from '../../components/ExpressionInput';
 
 function AddCalculator() {
   const [numA, setNumA] = useState('1');
   const [numB, setNumB] = useState('1');
   const [sum, setSum] = useState(null);
+  const [errorA, setErrorA] = useState(null);
+  const [errorB, setErrorB] = useState(null);
 
   useEffect(() => {
-    const a = parseFloat(numA);
-    const b = parseFloat(numB);
+    const a = safeEval(numA);
+    const b = safeEval(numB);
+    setErrorA(isNaN(a) && numA ? 'Invalid expression' : null);
+    setErrorB(isNaN(b) && numB ? 'Invalid expression' : null);
+    
     if (!isNaN(a) && !isNaN(b)) {
       setSum(a + b);
     } else {
@@ -19,22 +26,28 @@ function AddCalculator() {
 
   return (
     <div>
-      <h1>Add Calculator</h1>
+      <h2>Add Calculator</h2>
       <div>
-        <label>
-          Number A:
-          <input type="number" value={numA} onChange={(e) => setNumA(e.target.value)} />
-        </label>
+        <ExpressionInput
+          value={numA}
+          onChange={setNumA}
+          label="Number A:"
+          placeholder="e.g., 5 or 2+3"
+        />
+        {errorA && <div className="error">{errorA}</div>}
       </div>
       <div>
-        <label>
-          Number B:
-          <input type="number" value={numB} onChange={(e) => setNumB(e.target.value)} />
-        </label>
+        <ExpressionInput
+          value={numB}
+          onChange={setNumB}
+          label="Number B:"
+          placeholder="e.g., 5 or 2+3"
+        />
+        {errorB && <div className="error">{errorB}</div>}
       </div>
       {sum !== null && <p>Sum: <span className="answer">{formatNumber(sum)}</span></p>}
       <br />
-      <Link to="/">Back to Home</Link>
+      <BackNav />
     </div>
   );
 }

@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { formatNumber } from '../../utils/formatNumber';
+import BackNav from '../../components/BackNav';
 
 function ExpressionCalculator() {
-  const [expression, setExpression] = useState('');
+  const [expression, setExpression] = useState('((3.14*1.23)**2)+1');
   const [result, setResult] = useState(null);
 
   useEffect(() => {
     try {
-      // Basic validation to prevent arbitrary code execution
-      // This is a simple calculator, so eval is used for convenience.
-      // For a production app, a more robust expression parser would be needed.
-      const calculatedResult = eval(expression);
-      if (typeof calculatedResult === 'number' && !isNaN(calculatedResult)) {
-        setResult(calculatedResult);
+      // More robust evaluation with proper floating point handling
+      const sanitizedExpr = expression
+        .replace(/\^/g, '**') // Convert ^ to ** for exponentiation
+        .replace(/[^-()\d/*+.]/g, ''); // Remove potentially dangerous chars
+      
+      const calculatedResult = eval(sanitizedExpr);
+      if (typeof calculatedResult === 'number') {
+        setResult(parseFloat(calculatedResult.toFixed(6))); // Limit to 6 decimal places
       } else {
         setResult('Invalid Expression');
       }
@@ -24,7 +26,7 @@ function ExpressionCalculator() {
 
   return (
     <div>
-      <h1>Expression Calculator</h1>
+      <h2>Expression Calculator</h2>
       <div>
         <label>
           Expression:
@@ -32,7 +34,7 @@ function ExpressionCalculator() {
             type="text"
             value={expression}
             onChange={(e) => setExpression(e.target.value)}
-            placeholder="e.g., 1+(20/5)+(2*3)"
+            placeholder="e.g., 12.5+(2*3.14)"
           />
         </label>
       </div>
@@ -44,7 +46,7 @@ function ExpressionCalculator() {
         }</p>
       )}
       <br />
-      <Link to="/">Back to Home</Link>
+      <BackNav />
     </div>
   );
 }

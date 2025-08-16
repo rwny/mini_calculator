@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { formatNumber } from '../../utils/formatNumber';
+import BackNav from '../../components/BackNav';
 
 function TileQuantityCalculator() {
   const [roomLength, setRoomLength] = useState('1');
@@ -8,52 +8,71 @@ function TileQuantityCalculator() {
   const [tileLength, setTileLength] = useState('1');
   const [tileWidth, setTileWidth] = useState('1');
   const [quantity, setQuantity] = useState(null);
+  const [error, setError] = useState(null);
+
+  const safeEval = (expr) => {
+    try {
+      // Replace simple math expressions with their evaluated result
+      if (/^[\d+\-*/(). ]+$/.test(expr)) {
+        return eval(expr);
+      }
+      return parseFloat(expr);
+    } catch (e) {
+      return NaN;
+    }
+  };
 
   useEffect(() => {
-    const rL = parseFloat(roomLength);
-    const rW = parseFloat(roomWidth);
-    const tL = parseFloat(tileLength);
-    const tW = parseFloat(tileWidth);
+    setError(null);
+    const rL = safeEval(roomLength);
+    const rW = safeEval(roomWidth);
+    const tL = safeEval(tileLength);
+    const tW = safeEval(tileWidth);
 
-    if (!isNaN(rL) && !isNaN(rW) && !isNaN(tL) && !isNaN(tW) && tL > 0 && tW > 0) {
+    if (isNaN(rL) || isNaN(rW) || isNaN(tL) || isNaN(tW)) {
+      setError('Please enter valid numbers or simple math expressions');
+      setQuantity(null);
+    } else if (tL <= 0 || tW <= 0) {
+      setError('Tile dimensions must be greater than 0');
+      setQuantity(null);
+    } else {
       const roomArea = rL * rW;
       const tileArea = tL * tW;
       setQuantity(Math.ceil(roomArea / tileArea));
-    } else {
-      setQuantity(null);
     }
   }, [roomLength, roomWidth, tileLength, tileWidth]);
 
   return (
     <div>
-      <h1>Tile Quantity Calculator</h1>
+      <h2>Tile Quantity Calculator</h2>
       <div>
         <label>
           Room Length:
-          <input type="number" value={roomLength} onChange={(e) => setRoomLength(e.target.value)} />
+          <input type="text" value={roomLength} onChange={(e) => setRoomLength(e.target.value)} />
         </label>
       </div>
       <div>
         <label>
           Room Width:
-          <input type="number" value={roomWidth} onChange={(e) => setRoomWidth(e.target.value)} />
+          <input type="text" value={roomWidth} onChange={(e) => setRoomWidth(e.target.value)} />
         </label>
       </div>
       <div>
         <label>
           Tile Length:
-          <input type="number" value={tileLength} onChange={(e) => setTileLength(e.target.value)} />
+          <input type="text" value={tileLength} onChange={(e) => setTileLength(e.target.value)} />
         </label>
       </div>
       <div>
         <label>
           Tile Width:
-          <input type="number" value={tileWidth} onChange={(e) => setTileWidth(e.target.value)} />
+          <input type="text" value={tileWidth} onChange={(e) => setTileWidth(e.target.value)} />
         </label>
       </div>
-      {quantity !== null && <p>Tiles Needed: <span className="answer">{formatNumber(quantity)}</span></p>}
+      {error && <p className="error">{error}</p>}
+      {quantity !== null && !error && <p>Tiles Needed: <span className="answer">{formatNumber(quantity)}</span></p>}
       <br />
-      <Link to="/">Back to Home</Link>
+      <BackNav />
     </div>
   );
 }
