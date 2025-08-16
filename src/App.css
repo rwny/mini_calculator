@@ -1,0 +1,132 @@
+#root {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  padding: 20px;
+  border-right: 1px solid #ccc;
+  background-color: #f0f0f0; /* Default light theme background */
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin-bottom: 10px;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  font-size: 12pt; /* Menu text font size */
+}
+
+.sidebar a:hover {
+  color: #007bff;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+/* Basic styling for calculator pages */
+.content h1 {
+  margin-bottom: 20px;
+}
+
+.content div {
+  margin-bottom: 10px;
+}
+
+.content label {
+  display: inline-block;
+  width: 150px;
+  font-size: 12pt; /* Label text font size */
+}
+
+.content input {
+  padding: 8px;
+  margin-left: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 18pt; /* Input field text size */
+}
+
+.content button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.content button:hover {
+  background-color: #0056b3;
+}
+
+.content p {
+  margin-top: 15px;
+  font-weight: bold;
+  font-size: 12pt; /* Normal text size for result labels */
+}
+
+.content p span.answer {
+  font-size: 40pt; /* Large size only for answer numbers */
+}
+
+
+/* Dark Theme Styles */
+body.dark-theme {
+  background-color: #282c34;
+  color: #f8f8f2;
+  font-size: 12pt; /* Normal text font size */
+  font-family: 'Noto Sans Thai Looped', sans-serif;
+}
+
+body.dark-theme .sidebar {
+  background-color: #1e1e1e; /* Darker background for sidebar */
+  border-right: 1px solid #3a3f4b;
+}
+
+body.dark-theme .sidebar a {
+  color: #9da5b4;
+}
+
+body.dark-theme .sidebar a:hover {
+  color: #61dafb;
+}
+
+body.dark-theme .content {
+  background-color: #282c34;
+  color: #f8f8f2;
+}
+
+body.dark-theme .content input {
+  background-color: #3a3f4b;
+  color: #f8f8f2;
+  border: 1px solid #555;
+}
+
+body.dark-theme .content button {
+  background-color: #61dafb;
+  color: #282c34;
+}
+
+body.dark-theme .content button:hover {
+  background-color: #21a1f1;
+}
