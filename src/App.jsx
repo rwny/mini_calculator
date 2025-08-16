@@ -7,6 +7,8 @@ import WireLengthCalculator from './pages/calculator/WireLengthCalculator';
 import AddCalculator from './pages/calculator/AddCalculator';
 import ExpressionCalculator from './pages/calculator/ExpressionCalculator';
 import WallWindowAreaCalculator from './pages/calculator/WallWindowAreaCalculator';
+import JsConsoleCalculator from './pages/calculator/JsConsoleCalculator';
+import RuleOfThreeCalculator from './pages/calculator/RuleOfThreeCalculator';
 import './App.css';
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
             <Route path="/tile-quantity-calculator" element={<TileQuantityCalculator />} />
             <Route path="/wire-length-calculator" element={<WireLengthCalculator />} />
             <Route path="/wall-window-area-calculator" element={<WallWindowAreaCalculator />} />
+            <Route path="/js-console-calculator" element={<JsConsoleCalculator />} />
+            <Route path="/rule-of-three-calculator" element={<RuleOfThreeCalculator />} />
           </Routes>
         </div>
       </div>
