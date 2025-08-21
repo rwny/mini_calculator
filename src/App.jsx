@@ -9,6 +9,7 @@ import ExpressionCalculator from './pages/calculator/ExpressionCalculator';
 import WallWindowAreaCalculator from './pages/calculator/WallWindowAreaCalculator';
 import JsConsoleCalculator from './pages/calculator/JsConsoleCalculator';
 import RuleOfThreeCalculator from './pages/calculator/RuleOfThreeCalculator';
+import SteelPlateWeightCalculator from './pages/calculator/SteelPlateWeightCalculator';
 import './App.css';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
             <Route path="/wall-window-area-calculator" element={<WallWindowAreaCalculator />} />
             <Route path="/js-console-calculator" element={<JsConsoleCalculator />} />
             <Route path="/rule-of-three-calculator" element={<RuleOfThreeCalculator />} />
+            <Route path="/steel-plate-weight-calculator" element={<SteelPlateWeightCalculator />} />
           </Routes>
         </div>
       </div>
